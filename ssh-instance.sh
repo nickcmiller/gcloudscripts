@@ -37,7 +37,6 @@ echo "Identity file: $PRIVATE_KEY_PATH"
 # Append config to .ssh/config
 cat << EOF >> ~/.ssh/config
 
-
 Host $INSTANCE_NAME
     HostName $PUBLIC_IP
     IdentityFile $PRIVATE_KEY_PATH
