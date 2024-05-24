@@ -1,4 +1,10 @@
 #! /bin/bash
-INSTANCE_NAME=demo-instance
-REGION=us-west4-b
-gcloud compute instances start $INSTANCE_NAME --zone=$REGION
+
+source instance_config
+
+# If no name, zone, or project ID are provided as arguments, it uses default values.
+INSTANCE_NAME=${1:-$DEFAULT_INSTANCE_NAME}
+REGION=${2:-$DEFAULT_ZONE}
+PROJECT_ID=${3:-$DEFAULT_PROJECT_ID}
+
+gcloud compute instances start $INSTANCE_NAME --zone=$REGION --project=$PROJECT_ID
