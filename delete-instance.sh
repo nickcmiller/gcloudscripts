@@ -13,6 +13,6 @@ PROJECT_ID=${3:-$DEFAULT_PROJECT_ID}
 gcloud compute instances delete $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID
 
 # Delete the SSH config for the instance
-sed -i "/Host $INSTANCE_NAME/,+4 d" ~/.ssh/config
+sed -i '' "/^Host $INSTANCE_NAME$/,/^$/d" ~/.ssh/config
 
 

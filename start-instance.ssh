@@ -8,3 +8,9 @@ REGION=${2:-$DEFAULT_ZONE}
 PROJECT_ID=${3:-$DEFAULT_PROJECT_ID}
 
 gcloud compute instances start $INSTANCE_NAME --zone=$REGION --project=$PROJECT_ID
+
+# Delete the SSH config for the instance
+sed -i '' "/^Host $INSTANCE_NAME$/,/^$/d" ~/.ssh/config
+
+# Create a new SSH config entry for the instance
+./ssh-instance.sh $INSTANCE_NAME $REGION $PROJECT_ID
