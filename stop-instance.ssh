@@ -1,0 +1,10 @@
+#! /bin/bash
+
+source instance_config
+
+INSTANCE_NAME=${1:-$DEFAULT_INSTANCE_NAME}
+REGION=${2:-$DEFAULT_ZONE}
+PROJECT_ID=${3:-$DEFAULT_PROJECT_ID}
+
+gcloud compute instances stop $INSTANCE_NAME --zone=$REGION --project=$PROJECT_ID
+

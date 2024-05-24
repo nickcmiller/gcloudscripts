@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# This script creates a Google Cloud Compute instance with a specified name and zone.
+# If no name and zone are provided, it uses default values.
+INSTANCE_NAME=${1:-"instance-1"}
+ZONE=${2:-"us-west1-b"}
+
+RETRIEVED_PROJECT_ID=$(gcloud config get-value project)
+PROJECT_ID=${3:-$RETRIEVED_PROJECT_ID}
+# This command initializes or clears the instance_config file
+echo > instance_config
+
+# This command writes the instance name and zone to the instance_config file
+echo "DEFAULT_INSTANCE_NAME=$INSTANCE_NAME" >> instance_config
+echo "DEFAULT_ZONE=$ZONE" >> instance_config
+echo "DEFAULT_PROJECT_ID=$PROJECT_ID" >> instance_config
+
+# This command creates a Google Cloud Compute instance with the specified name and zone
+gcloud compute instances create $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID

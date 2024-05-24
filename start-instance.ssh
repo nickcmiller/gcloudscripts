@@ -1,0 +1,4 @@
+#! /bin/bash
+INSTANCE_NAME=demo-instance
+REGION=us-west4-b
+gcloud compute instances start $INSTANCE_NAME --zone=$REGION
