@@ -9,6 +9,19 @@ ZONE=${2:-"us-west1-b"}
 RETRIEVED_PROJECT_ID=$(gcloud config get-value project)
 PROJECT_ID=${3:-$RETRIEVED_PROJECT_ID}
 
+# Create the instance
 ./create-instance.ssh $INSTANCE_NAME $ZONE $PROJECT_ID
+
+# Get the public IP address of the instance
+PUBLIC_IP=$(gcloud compute instances describe $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+
+# Wait for SSH service to start
+echo "Checking SSH connectivity..."
+until nc -zvw3 $PUBLIC_IP 22; do
+    echo "Waiting for SSH service to start..."
+    sleep 10
+done
+
+# SSH into the instance
 ./ssh-instance.sh $INSTANCE_NAME $ZONE $PROJECT_ID
 

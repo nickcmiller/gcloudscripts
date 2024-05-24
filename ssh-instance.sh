@@ -27,20 +27,21 @@ PUBLIC_IP=$(gcloud compute instances describe $INSTANCE_NAME --zone=$ZONE --proj
 # Get the username of the instance
 USERNAME=$(gcloud compute ssh $INSTANCE_NAME --zone $ZONE --project=$PROJECT_ID --dry-run | awk -F'[@ ]' '{print $(NF-1)}')
 
-# Ensure .ssh key is added to project metadata by lgging in to the instance and running a command
-gcloud compute ssh $INSTANCE_NAME --zone $ZONE --project=$PROJECT_ID --command "echo 'Hello from $INSTANCE_NAME.'"
+# Ensure .ssh key is added to project metadata by logging in to the instance and running a command
+gcloud compute ssh $INSTANCE_NAME --zone $ZONE --project=$PROJECT_ID --command "echo 'Added ssh key to project metadata.'" || echo "Failed to add .ssh key to project metadata."
 
+# Print the public IP address, username, and identity file
 echo "Public IP: $PUBLIC_IP"
 echo "Username: $USERNAME"
 echo "Identity file: $PRIVATE_KEY_PATH"
 
 # Append config to .ssh/config
 cat << EOF >> ~/.ssh/config
-
 Host $INSTANCE_NAME
     HostName $PUBLIC_IP
     IdentityFile $PRIVATE_KEY_PATH
     User $USERNAME
+
 EOF
 
 # ALTERNATIVE TO CONFIG CREATION: SSH into the instance
