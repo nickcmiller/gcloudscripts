@@ -8,6 +8,10 @@ ZONE=${2:-"us-west1-b"}
 # Retrieve the project ID from the gcloud config and use it if not provided as an argument
 RETRIEVED_PROJECT_ID=$(gcloud config get-value project)
 PROJECT_ID=${3:-$RETRIEVED_PROJECT_ID}
+# Choose the instance type based on the requirements
+MACHINE_TYPE=${4:-"n1-standard-2"}
+
+
 # This command initializes or clears the instance_config file
 echo > instance_config
 
@@ -17,4 +21,4 @@ echo "DEFAULT_ZONE=$ZONE" >> instance_config
 echo "DEFAULT_PROJECT_ID=$PROJECT_ID" >> instance_config
 
 # This command creates a Google Cloud Compute instance with the specified name and zone
-gcloud compute instances create $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID
+gcloud compute instances create $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID --machine-type=$MACHINE_TYPE

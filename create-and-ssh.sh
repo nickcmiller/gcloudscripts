@@ -9,8 +9,10 @@ ZONE=${2:-"us-west1-b"}
 RETRIEVED_PROJECT_ID=$(gcloud config get-value project)
 PROJECT_ID=${3:-$RETRIEVED_PROJECT_ID}
 
+MACHINE_TYPE=${4:-"n1-standard-2"}
+
 # Create the instance
-./create-instance.ssh $INSTANCE_NAME $ZONE $PROJECT_ID
+./create-instance.ssh $INSTANCE_NAME $ZONE $PROJECT_ID $MACHINE_TYPE
 
 # Get the public IP address of the instance
 PUBLIC_IP=$(gcloud compute instances describe $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
