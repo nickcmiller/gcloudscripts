@@ -3,7 +3,7 @@
 # This script creates a Google Cloud Compute instance with a specified name and zone.
 # If no name and zone are provided as arguments, it uses default values.
 INSTANCE_NAME=${1:-"instance-1"}
-ZONE=${2:-"us-west1-b"}
+ZONE=${2:-"us-west4-a"}
 
 # Retrieve the project ID from the gcloud config and use it if not provided as an argument
 RETRIEVED_PROJECT_ID=$(gcloud config get-value project)
@@ -20,5 +20,6 @@ echo "DEFAULT_INSTANCE_NAME=$INSTANCE_NAME" >> instance_config
 echo "DEFAULT_ZONE=$ZONE" >> instance_config
 echo "DEFAULT_PROJECT_ID=$PROJECT_ID" >> instance_config
 
-# This command creates a Google Cloud Compute instance with the specified name and zone
-gcloud compute instances create $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID --machine-type=$MACHINE_TYPE
+# This command creates a Google Cloud Compute instance with thte specified name and zone
+# Changed maintenance policy to TERMINATE in order to allow for GPUs
+gcloud compute instances create $INSTANCE_NAME --zone=$ZONE --project=$PROJECT_ID --machine-type=$MACHINE_TYPE --maintenance-policy=TERMINATE
