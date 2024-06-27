@@ -9,7 +9,7 @@ ZONE=${2:-"us-west1-b"}
 RETRIEVED_PROJECT_ID=$(gcloud config get-value project)
 PROJECT_ID=${3:-$RETRIEVED_PROJECT_ID}
 
-MACHINE_TYPE=${4:-"g2-standard-4"}
+MACHINE_TYPE=${4:-"n1-standard-2"}
 
 # Create the instance
 ./create-instance.ssh $INSTANCE_NAME $ZONE $PROJECT_ID $MACHINE_TYPE
